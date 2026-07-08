@@ -1,0 +1,76 @@
+// Query on Nested and Embedded Documents
+
+// Specify Equality Match on a Nested Field
+
+db.collection("inventory").find({
+  "size.uom": "in",
+});
+
+// Specify Match using Query Operator $
+db.collection("inventory").find({
+  "size.h": { $lt: 15 },
+});
+
+// Specify AND Condition
+db.collection("inventory").find({
+  "size.h": { $lt: 15 },
+  "size.uom": "in",
+  status: "D",
+});
+
+// Match an Embedded/Nested Document
+db.collection.find({
+  size: { h: 14, w: 21, uom: "cm" },
+});
+// Notice that the order of the fields in the embedded document matters. The above query will not match documents where the fields are in a different order, such as { uom: 'cm', h: 14, w: 21 }.
+
+// For Array
+
+// Match an Array
+db.collection("inventory").find({
+  tags: ["red", "blank"],
+});
+
+// both "red" and "blank" regardless of order or other elements in the array
+db.collection("inventory").find({
+  tags: { $all: ["red", "blank"] },
+});
+
+// Query an Array for an Element
+db.collection("inventory").find({
+  tags: "red",
+});
+
+// To specify conditions on the elements in the array field
+db.collection("inventory").find({
+  dim_cm: { $gt: 25 },
+});
+
+// Specify Multiple Conditions for Array Elements
+
+// Query an Array with Compound Filter Conditions on the Array Elements
+db.collection("inventory").find({
+  dim_cm: { $gt: 15, $lt: 20 },
+});
+// dim_cm is an array field, and the query matches documents where at least one element in the dim_cm array is greater than 15 and less than 20. The query does not require that a single element satisfy both conditions; it can be satisfied by different elements in the array. both satisfy is also ok.
+
+// Query for an Array Element that Meets Multiple Criteria
+db.collection("inventory").find({
+  dim_cm: { $elemMatch: { $gt: 22, $lt: 30 } },
+});
+
+// Query for an Element by the Array Index Position
+db.collection("inventory").find({
+  "dim_cm.1": { $gt: 25 },
+});
+// The query matches documents where the second element (index 1) of the dim_cm array is greater than 25. The query does not consider other elements in the array.
+
+// Query an Array by Array Length
+db.collection("inventory").find({
+  tags: { $size: 3 },
+});
+// The query matches documents where the tags array has exactly three elements. The $size operator can be used to match arrays of a specific length, but it does not support range queries or other conditions on the array length.
+
+// MongoDB Embedding Model {Child are in Parent}
+// MongoDB Referencing Model {Child are in another collection and reference to Parent}
+// Disadvantage of Referencing Model is need to join back!
