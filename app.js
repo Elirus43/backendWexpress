@@ -11,9 +11,11 @@ const {db} = require('./config/database');
 // Route Register
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-let demoRouter = require('./routes/demo');
-let testRouter = require('./routes/routeTesting');
-let todoRouter = require('./routes/todos');
+const demoRouter = require('./routes/demo');
+const testRouter = require('./routes/routeTesting');
+const todoRouter = require('./routes/todos');
+const movieRouter = require('./routes/movies');
+const util = require("./util/AppErr");
 
 var app = express();
 
@@ -37,6 +39,7 @@ app.use('/users', usersRouter);
 app.use('/demo', demoRouter);
 app.use('/test', testRouter);
 app.use('/api/todos', todoRouter);
+app.use('/api/movies', movieRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -48,10 +51,16 @@ app.use(function(err, req, res, next) {
   console.error(err);
   // set locals, only providing error in development
   // console.error(err)
-  if (err instanceof mongoose.Error.ValidationError) {
-    res.status(400)
-        .json({errors: err.errors});
-  } else
+if (err instanceof util.NotFoundError) {
+  res.status(404)
+      .json({
+        message: err.message,
+        errors: err.errors});
+}
+
+  else if (err instanceof mongoose.Error.ValidationError) {
+  res.status(400).json({errors: err.errors});
+    } else
   {
     res.locals.message = err.message;
     res.locals.error = req.app.get('env') === 'development' ? err : {};

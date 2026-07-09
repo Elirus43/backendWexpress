@@ -1,4 +1,5 @@
 const todoService = require('../services/TodoService');
+const appError = require("../util/AppErr");
 async function getAllTodo(req,res)
 {
     console.log('GET /todos ');
@@ -19,11 +20,9 @@ async function getTodoById(req, res)
             data: todo,
         });
     } else {
-        res.status(404).json({
-            message: "Todo Not Found",
-        });
+        throw new appError.NotFoundError("Todo Not Found");
+        }
     }
-}
 async function updateTodoById(req, res)
 {
     let id = req.params.id;
