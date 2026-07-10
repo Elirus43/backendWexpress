@@ -16,9 +16,22 @@ async function saveMovie(movie)
     let savedMovie = await new Movie(movie).save();
     return savedMovie;
 }
+async function updateMovie(id, movie)
+{
+    const _id = new mongoose.Types.ObjectId(id);
+    let updateMovie = await Movie.findOneAndUpdate({
+        _id,
+    }, movie, {
+        runValidators: true,
+        returnDocument: 'after',
+        upsert: true,
+    })
+    return updateMovie;
+}
 
 module.exports = {
     getAllMovies,
     getMovieById,
     saveMovie,
+    updateMovie,
 }

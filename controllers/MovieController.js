@@ -34,9 +34,20 @@ async function saveMoive(req, res)
         data: savedMovie,
     })
 }
-async function updateMovie(id, movie)
+async function updateMovie(req, res)
 {
-
+    let id = req.params.id;
+    let movie = req.body;
+    let updatedMovie = await movieService.updateMovie(id, movie);
+    if(updatedMovie)
+    {
+        res.json({
+            message: "Movie updated successfully",
+            data: updatedMovie,
+        })
+    } else {
+        throw new util.NotFoundError('Movie Id ' + id + ' not found');
+    }
 }
 module.exports = {
     getAllMovies,
