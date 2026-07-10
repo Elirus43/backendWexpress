@@ -1,5 +1,6 @@
 const todoService = require('../services/TodoService');
 const appError = require("../util/AppErr");
+const util = require("../util/AppErr");
 async function getAllTodo(req,res)
 {
     console.log('GET /todos ');
@@ -67,10 +68,8 @@ async function deleteTodoById(req, res)
             data:todo,
         })
     } else {
-        res.status(404).json({
-            message:"Todo Not Found",
-        })
-    }
+        throw new util.NotFoundError("Todo Not Found");
+        }
 }
 
 module.exports = {

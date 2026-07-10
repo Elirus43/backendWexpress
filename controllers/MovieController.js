@@ -49,9 +49,24 @@ async function updateMovie(req, res)
         throw new util.NotFoundError('Movie Id ' + id + ' not found');
     }
 }
+async function deleteMovie(req, res)
+{
+    let id = req.params.id;
+    let movie = await movieService.deleteMovie(id);
+    if(movie)
+    {
+        res.json({
+            message: "Movie deleted successfully",
+            data: movie,
+        })
+    } else {
+        throw new util.NotFoundError('Movie Id ' + id + ' not found');
+    }
+}
 module.exports = {
     getAllMovies,
     getMovieById,
     saveMoive,
     updateMovie,
+    deleteMovie
 };

@@ -28,10 +28,18 @@ async function updateMovie(id, movie)
     })
     return updateMovie;
 }
-
+async function deleteMovie(id)
+{
+    const _id = new mongoose.Types.ObjectId(id);
+    let deletedMovie = await Movie.findByIdAndDelete({
+        _id,
+    });
+    return deletedMovie;
+}
 module.exports = {
     getAllMovies,
     getMovieById,
     saveMovie,
     updateMovie,
+    deleteMovie
 }
