@@ -29,17 +29,21 @@ async function getMovieByYear(req, res)
 {
     let year = req.params.year;
     let movie = await movieService.getMovieByYear(year);
-    if(movie)
-    {
-        res.json({
-            message: "Movies List Returned By Year",
-            data: movie,
-        })
-    } else {
-        throw new util.NotFoundError("Movie Not Found");
-    }
+    res.status(200).json({
+        message: "Movie Details Returned",
+        data: movie,
+    })
 }
-async function saveMoive(req, res)
+async function getMovieByTitle(req, res)
+{
+    let title = req.params.title;
+    let movie = await movieService.getMovieByTitle(title);
+    res.status(200).json({
+        message: "Movie List Returned",
+        data: movie,
+    })
+}
+async function saveMovie(req, res)
 {
     let movie = req.body;
     let savedMovie = await movieService.saveMovie(movie);
@@ -81,7 +85,8 @@ module.exports = {
     getAllMovies,
     getMovieById,
     getMovieByYear,
-    saveMoive,
+    getMovieByTitle,
+    saveMovie,
     updateMovie,
     deleteMovie
 };

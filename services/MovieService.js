@@ -43,11 +43,19 @@ async function getMovieByYear(year)
     })
     return movie;
 }
+async function getMovieByTitle(title)
+{
+    let movie = await Movie.find({
+        title: new RegExp(title, 'i'),
+    })
+    return movie;
+}
 module.exports = {
     getAllMovies,
     getMovieById,
     saveMovie,
     updateMovie,
     deleteMovie,
-    getMovieByYear
+    getMovieByYear,
+    getMovieByTitle
 }
