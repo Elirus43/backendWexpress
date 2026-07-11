@@ -36,10 +36,18 @@ async function deleteMovie(id)
     });
     return deletedMovie;
 }
+async function getMovieByYear(year)
+{
+    let movie = await Movie.find({
+        year: year,
+    })
+    return movie;
+}
 module.exports = {
     getAllMovies,
     getMovieById,
     saveMovie,
     updateMovie,
-    deleteMovie
+    deleteMovie,
+    getMovieByYear
 }

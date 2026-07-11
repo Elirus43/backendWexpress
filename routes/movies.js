@@ -5,6 +5,7 @@ const Movie = require('../controllers/MovieController');
 router.get('/', Movie.getAllMovies);
 router.post('/', Movie.saveMoive);
 router.get('/:id', Movie.getMovieById);
+router.get('/year/:year', Movie.getMovieByYear);
 router.put('/:id', Movie.updateMovie);
 router.delete('/:id', Movie.deleteMovie);
 
