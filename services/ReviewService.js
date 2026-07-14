@@ -13,7 +13,9 @@ async function getReviewsByMovieId(movieId)
     let id = new mongoose.Types.ObjectId(movieId);
     let reviews = await Review.find({
         movie: id
-    });
+    })
+
+        // .populate('movie'); movie object join also
     return reviews;
 }
 async function saveReview(review)
@@ -30,9 +32,22 @@ async function saveReview(review)
     let savedReview = await newReview.save();
     return savedReview;
 }
+async function updateReviewById(id, review)
+{
+    review.movie = new mongoose.Types.ObjectId(review.movie);
+    let _id = new mongoose.Types.ObjectId(id);
+    let updatedReview = await Review.findOneAndUpdate({
+        _id
+    }, review, {
+        runValidators: true,
+        returnDocument: 'after'
+    })
+    return updatedReview;
+}
 
 module.exports = {
     getAllReviews,
     getReviewsByMovieId,
-    saveReview
+    saveReview,
+    updateReviewById
 }

@@ -27,9 +27,19 @@ async function saveReview(req, res)
         data: review
     })
 }
+async function updateReviewById(req, res)
+{
+    let id = req.params.id;
+    let review = await reviewService.updateReviewById(id, req.body);
+    res.json({
+        message: 'Review saved successfully',
+        data: review
+    })
+}
 
 module.exports = {
     getAllReviews,
     getReviewsByMovieId,
-    saveReview
+    saveReview,
+    updateReviewById
 }
