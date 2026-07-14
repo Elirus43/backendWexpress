@@ -8,6 +8,14 @@ async function getAllReviews()
     let reviews = await Review.find();
     return reviews;
 }
+async function getReviewsByMovieId(movieId)
+{
+    let id = new mongoose.Types.ObjectId(movieId);
+    let reviews = await Review.find({
+        movie: id
+    });
+    return reviews;
+}
 async function saveReview(review)
 {
     const validMovie = await Movie.findById(review.movie);
@@ -25,5 +33,6 @@ async function saveReview(review)
 
 module.exports = {
     getAllReviews,
+    getReviewsByMovieId,
     saveReview
 }

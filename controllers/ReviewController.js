@@ -10,6 +10,15 @@ async function getAllReviews(req, res)
         data: reviews
     })
 }
+async function getReviewsByMovieId(req, res)
+{
+    let movieId = req.params.movieId;
+    let reviews = await reviewService.getReviewsByMovieId(movieId);
+    res.json({
+        message: 'Reviews successfully retrieved',
+        data: reviews
+    })
+}
 async function saveReview(req, res)
 {
     let review = await reviewService.saveReview(req.body);
@@ -21,5 +30,6 @@ async function saveReview(req, res)
 
 module.exports = {
     getAllReviews,
+    getReviewsByMovieId,
     saveReview
 }
