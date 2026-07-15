@@ -44,10 +44,19 @@ async function updateReviewById(id, review)
     })
     return updatedReview;
 }
+async function deleteReviewById(id)
+{
+    let _id = new mongoose.Types.ObjectId(id);
+    let review = await Review.findOneAndDelete({
+        _id
+    })
+    return review;
+}
 
 module.exports = {
     getAllReviews,
     getReviewsByMovieId,
     saveReview,
-    updateReviewById
+    updateReviewById,
+    deleteReviewById
 }

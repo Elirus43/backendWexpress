@@ -36,6 +36,11 @@ async function updateReviewById(req, res)
         data: review
     })
 }
+async function deleteReviewById(req, res)
+{
+    let id = req.params.id;
+    let review = await reviewService.deleteReviewById(id);
+}
 
 module.exports = {
     getAllReviews,
