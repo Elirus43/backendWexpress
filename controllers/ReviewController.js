@@ -40,10 +40,16 @@ async function deleteReviewById(req, res)
 {
     let id = req.params.id;
     let review = await reviewService.deleteReviewById(id);
-    res.json({
-        message: "Review deleted successfully",
-        data: review
-    })
+    if(review)
+    {
+        res.json({
+            message: "Review deleted successfully",
+            data: review
+        })
+    } else {
+        throw new util.NotFoundError("Review not found!");
+    }
+
 }
 
 module.exports = {
