@@ -16,6 +16,7 @@ const testRouter = require('./routes/routeTesting');
 const todoRouter = require('./routes/todos');
 const movieRouter = require('./routes/movies');
 const reviewRouter = require('./routes/reviews');
+const userRouter = require('./routes/users');
 const util = require("./util/AppErr");
 
 var app = express();
@@ -42,6 +43,7 @@ app.use('/test', testRouter);
 app.use('/api/todos', todoRouter);
 app.use('/api/movies', movieRouter);
 app.use('/api/reviews', reviewRouter);
+app.use('/api/users', userRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
