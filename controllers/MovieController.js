@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 
 async function getAllMovies(req, res)
 {
+    const user = req.user;  // jwt token auth pass, notice for who enter, use
+    console.log("Logged in User: ", user);
     let movies = await movieService.getAllMovies();
     res.status(200).json({
         message: "Movies List Returned",

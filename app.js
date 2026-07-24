@@ -17,6 +17,7 @@ const todoRouter = require('./routes/todos');
 const movieRouter = require('./routes/movies');
 const reviewRouter = require('./routes/reviews');
 const userRouter = require('./routes/users');
+const {verify} = require('./middleware/auth');
 const util = require("./util/AppErr");
 
 var app = express();
@@ -41,7 +42,7 @@ app.use('/users', usersRouter);
 app.use('/demo', demoRouter);
 app.use('/test', testRouter);
 app.use('/api/todos', todoRouter);
-app.use('/api/movies', movieRouter);
+app.use('/api/movies',verify, movieRouter); // implementing jwt token checking middleware for movies API
 app.use('/api/reviews', reviewRouter);
 app.use('/api/users', userRouter);
 

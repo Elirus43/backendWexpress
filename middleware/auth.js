@@ -3,21 +3,21 @@ const {config} = require("../config/Config");
 async function verify(req, res,next) {
     console.log('verify ');
     let authorization = req.headers.authorization;
-    if (!authorization) {
+    if (!authorization) {   // checking header including or not, not attention on correctness of token
         res.status(401).json({
             message:'Not authorized'
         });
     }
     else {
         let token = authorization.substring("Bearer ".length);
-        if(token )
+        if(token)
         {
-            //console.log('jwt token ',token);
-            try
+            console.log('jwt token ',token);
+            try // Token validating
             {
-                let payload = await jwt.verify(token, config.TOKEN_SECRET);
+                let payload = await jwt.verify(token, config.TOKEN_SECRET); // jwt token validate
                 console.log('jwt payload ',payload);
-                req.user = payload;
+                req.user = payload; // after validate auth correct, deciding which user
                 next();
             }
             catch(e)
@@ -38,4 +38,8 @@ async function verify(req, res,next) {
         }
 
     }
+}
+
+module.exports = {
+    verify
 }
