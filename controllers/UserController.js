@@ -7,6 +7,7 @@ async function registerUser(req, res)
         let user = req.body;
         let token = await userService.registerUser(user);
         res.json({
+            message: 'User registered successfully',
             token,
         })
     }

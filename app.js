@@ -43,7 +43,7 @@ app.use('/demo', demoRouter);
 app.use('/test', testRouter);
 app.use('/api/todos', todoRouter);
 app.use('/api/movies',verify, movieRouter); // implementing jwt token checking middleware for movies API
-app.use('/api/reviews', reviewRouter);
+app.use('/api/reviews', verify, reviewRouter);
 app.use('/api/users', userRouter);
 
 // catch 404 and forward to error handler
